@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fisch Calculators</title>
+    <!-- Bubbly font -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Baloo 2', cursive;
+            background: #0d1b2a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Background container */
+        .fish-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Fish & bubbles */
+        .fish { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.03);}
+        .fish.small { width: 25px; height: 12px; }
+        .fish.medium { width: 40px; height: 20px; }
+        .fish.large { width: 60px; height: 30px; }
+        .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.05); }
+
+        /* Container for calculators */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(30,30,30,0.85);
+            padding: 50px 50px 60px 50px;
+            border-radius: 25px;
+            width: 500px;
+            text-align: center;
+            box-shadow: 0 0 35px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 30px;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
+
+        input, select {
+            width: 90%;
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 0 5px rgba(255,255,255,0.1);
+        }
+
+        button.calc-button {
+            width: 95%;
+            padding: 14px;
+            background: rgba(70,130,180,0.7);
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-shadow: 0 0 4px rgba(255,255,255,0.5);
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+            margin-top: 10px;
+        }
+
+        button.calc-button:hover {
+            background: rgba(70,130,180,0.9);
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        .result {
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow:
+                0 0 4px rgba(255,255,255,0.5),
+                0 0 10px rgba(255,255,255,0.3),
+                0 0 20px rgba(255,255,255,0.2);
+        }
+
+        /* Toggle buttons */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            color: white;
+            text-shadow: 0 0 4px rgba(255,255,255,0.5);
+        }
+
+        .level-btn { background: #4682b4; }
+        .level-btn.active { background: #87cefa; color: #000; }
+        .money-btn { background: #28a745; }
+        .money-btn.active { background: #7cfc00; color: #000; }
+
+        /* Bottom-right corner buttons */
+        .corner-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 20;
+        }
+
+        .corner-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(70,130,180,0.7);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 4px rgba(255,255,255,0.5);
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .corner-btn:hover {
+            background: rgba(70,130,180,0.9);
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: 220px;
+            background-color: rgba(0,0,0,0.85);
+            color: #fff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px;
+            position: absolute;
+            bottom: 50px;
+            right: 0;
+            z-index: 25;
+            font-size: 14px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .corner-btn:hover .tooltip {
+            visibility: visible;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="fish-background" id="bg"></div>
+
+    <div class="container">
+        <div class="toggle-container">
+            <button class="toggle-btn level-btn active" onclick="showCalculator('level')">Level Calculator</button>
+            <button class="toggle-btn money-btn" onclick="showCalculator('money')">Money Calculator</button>
+        </div>
+
+        <!-- Level Calculator -->
+        <div id="levelCalc">
+            <h2>Fisch Level Calculator</h2>
+            <input type="number" id="currentLevel" placeholder="Current Level (1-2000)" min="1" max="2000">
+            <input type="number" id="gainedXP" placeholder="XP Gained" min="0">
+            <button class="calc-button" onclick="calculateLevel()">Calculate</button>
+            <div class="result" id="levelResult"></div>
+        </div>
+
+        <!-- Money Calculator -->
+        <div id="moneyCalc" style="display:none;">
+            <h2>Fisch Money Calculator</h2>
+            <select id="fishSelect"></select>
+            <input type="number" id="fishWeight" placeholder="Weight (kg)" min="1">
+            <select id="mutationSelect"></select>
+            <select id="attributeSelect">
+                <option value="1">None</option>
+                <option value="1.85">Shiny</option>
+                <option value="1.85">Sparkling</option>
+            </select>
+            <button class="calc-button" onclick="calculateMoney()">Calculate</button>
+            <div class="result" id="moneyResult"></div>
+        </div>
+    </div>
+
+    <!-- Bottom-right corner buttons -->
+    <div class="corner-buttons">
+        <div class="corner-btn">
+            ?
+            <div class="tooltip">
+                Level: 1: Input your current level<br>
+                2: Input XP gained<br>
+                3: Get your new level<br>
+                Money: 1: Select fish<br>
+                2: Input weight<br>
+                3: Select mutation/attribute<br>
+                4: Get C$ value
+            </div>
+        </div>
+        <div class="corner-btn">
+            🔨
+            <div class="tooltip">
+                Developed by fade, YaseenElkasabiii on Roblox, drop a follow!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ---------- Level Calculator ----------
+        function xpRequired(level) {
+            if(level < 1001) return 190*level;
+            let multiplier = Math.pow(2, Math.floor((level-1001)/500)+1);
+            return 190*level*multiplier;
+        }
+
+        function calculateLevel() {
+            let level = parseInt(document.getElementById("currentLevel").value);
+            let xp = parseInt(document.getElementById("gainedXP").value);
+            if(!level || level<1 || level>2000){
+                document.getElementById("levelResult").innerText = "Invalid starting level.";
+                return;
+            }
+            while(level < 2000){
+                let needed = xpRequired(level);
+                if(xp >= needed){ xp -= needed; level++; } else break;
+            }
+            document.getElementById("levelResult").innerText = "Final Level: " + level;
+        }
+
+        // ---------- Toggle Calculators ----------
+        function showCalculator(calc) {
+            document.getElementById('levelCalc').style.display = calc==='level'?'block':'none';
+            document.getElementById('moneyCalc').style.display = calc==='money'?'block':'none';
+            document.querySelector('.level-btn').classList.toggle('active', calc==='level');
+            document.querySelector('.money-btn').classList.toggle('active', calc==='money');
+        }
+
+        // ---------- Money Calculator ----------
+        // Sample fish list with base value (C$/kg) from official wiki
+        const fishList = [
+            {name:'Salmon', value:3.13},
+            {name:'Trout', value:2.75},
+            {name:'Tuna', value:5.5},
+            {name:'Carp', value:1.8},
+            {name:'Catfish', value:2.2},
+            {name:'Bass', value:2.5},
+            {name:'Giant Squid', value:10},
+            {name:'Shark', value:20},
+            {name:'Clownfish', value:4},
+            {name:'Goldfish', value:2}
+            // Add more fish here from official wiki as needed
+        ];
+
+        const mutationList = [
+            {name:'None', multiplier:1},
+            {name:'Puritas', multiplier:17},
+            {name:'Umbra', multiplier:15},
+            {name:'Sacratus', multiplier:12.7},
+            {name:'Chaotic', multiplier:12},
+            {name:'Blessed', multiplier:10},
+            {name:'Mythical', multiplier:4.5},
+            {name:'Abyssal', multiplier:3.5},
+            {name:'Sanguine', multiplier:8},
+            {name:'Electric Shock', multiplier:3.5},
+            {name:'Heavenly', multiplier:6},
+            {name:'Crystalized', multiplier:3},
+            {name:'Solarblaze', multiplier:2.5},
+            {name:'Wrath', multiplier:6}
+        ];
+
+        const fishSelect = document.getElementById('fishSelect');
+        fishList.forEach(f=>{ 
+            let opt = document.createElement('option');
+            opt.value = f.value;
+            opt.innerText = f.name + " (C$/kg: "+f.value+")";
+            fishSelect.appendChild(opt);
+        });
+
+        const mutationSelect = document.getElementById('mutationSelect');
+        mutationList.forEach(m=>{
+            let opt = document.createElement('option');
+            opt.value = m.multiplier;
+            opt.innerText = m.name + " (×"+m.multiplier+")";
+            mutationSelect.appendChild(opt);
+        });
+
+        function calculateMoney(){
+            let fishValue = parseFloat(fishSelect.value);
+            let weight = parseFloat(document.getElementById('fishWeight').value);
+            let mutation = parseFloat(mutationSelect.value);
+            let attribute = parseFloat(document.getElementById('attributeSelect').value);
+
+            if(!weight || weight<=0){document.getElementById('moneyResult').innerText='Invalid weight.'; return;}
+
+            let total = fishValue * weight * mutation * attribute;
+            document.getElementById('moneyResult').innerText = "Total C$: " + total.toLocaleString();
+        }
+
+        // ---------- Fish/Bubbles Background ----------
+        const fishContainer = document.getElementById('bg');
+        const fishCount = 15;
+        for(let i=0;i<fishCount;i++){
+            let fish = document.createElement('div');
+            fish.classList.add('fish');
+            let size = ['small','medium','large'][Math.floor(Math.random()*3)];
+            fish.classList.add(size);
+            fish.style.top = Math.random()*80 + '%';
+            fish.style.left = Math.random()*100 + '%';
+            fishContainer.appendChild(fish);
+        }
+        const bubbleCount = 30;
+        for(let i=0;i<bubbleCount;i++){
+            let bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            bubble.style.width = bubble.style.height = (Math.random()*8+4) + 'px';
+            bubble.style.top = Math.random()*80 + '%';
+            bubble.style.left = Math.random()*100 + '%';
+            fishContainer.appendChild(bubble);
+        }
+    </script>
+</body>
+</html>
