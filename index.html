@@ -264,9 +264,124 @@
 
         // Fish and Mutation data
         const fishList = [
-            {name:'Salmon', value:3.13}, {name:'Trout', value:2.75}, {name:'Tuna', value:5.5}, {name:'Carp', value:1.8},
-            // Add ALL remaining fishes from official wiki here
-        ];
+    // Ancient Archives
+    {name:'Birgeria', biome:'Ancient Archives', base:1.67},
+    {name:'Palaeoniscum', biome:'Ancient Archives', base:1.79},
+    {name:'Phanerorhynchus', biome:'Ancient Archives', base:3.21},
+    {name:'Diplurus', biome:'Ancient Archives', base:5},
+    {name:'Lepidotes', biome:'Ancient Archives', base:9},
+    {name:'Amblypterus', biome:'Ancient Archives', base:13.89},
+
+    // Ancient Isle
+    {name:'Piranha', biome:'Ancient Isle', base:17},
+    {name:'Cladoselache', biome:'Ancient Isle', base:3.75},
+    {name:'Starfish', biome:'Ancient Isle', base:15.71},
+    {name:'Onychodus', biome:'Ancient Isle', base:0.82},
+    {name:'Anomalocaris', biome:'Ancient Isle', base:2.25},
+    {name:'Xiphactinus', biome:'Ancient Isle', base:0.85},
+    {name:'Acanthodii', biome:'Ancient Isle', base:10},
+    {name:'Hyneria', biome:'Ancient Isle', base:0.08},
+    {name:'Cobia', biome:'Ancient Isle', base:3.29},
+    {name:'Hallucigenia', biome:'Ancient Isle', base:20},
+
+    // Blue Moon
+    {name:'Moon Arctic Char', biome:'Blue Moon', base:13.33},
+    {name:'Silver Scuttler', biome:'Blue Moon', base:2.42},
+    {name:'Pale Ghost Lumpfish', biome:'Blue Moon', base:1250},
+    {name:'Frost Ray', biome:'Blue Moon', base:7.92},
+    {name:'Blue Langanose', biome:'Blue Moon', base:15.83},
+    {name:'Starbellied Wolf Fish', biome:'Blue Moon', base:145.83},
+    {name:'Icy Daggerfish', biome:'Blue Moon', base:195.74},
+    {name:'Lunar Monkfish', biome:'Blue Moon', base:32},
+
+    // Calm Zone
+    {name:'Quartzfin Queenfish', biome:'Calm Zone', base:7.5},
+    {name:'Emerald Elephantnose', biome:'Calm Zone', base:6.25},
+    {name:'Diamond Discus', biome:'Calm Zone', base:6.86},
+    {name:'Sapphire Stargazer', biome:'Calm Zone', base:9.29},
+    {name:'Prismatic Parrotfish', biome:'Calm Zone', base:62.5},
+    {name:'Ruby Rasbora', biome:'Calm Zone', base:14},
+    {name:'Crystal Corydoras', biome:'Calm Zone', base:7.5},
+    {name:'Shimmering Silverside', biome:'Calm Zone', base:111.43},
+    {name:'Crystallized Seadragon', biome:'Calm Zone', base:0.29},
+
+    // Cryogenic Canal
+    {name:'Snowflake Smelt', biome:'Cryogenic Canal', base:90},
+    {name:'Frost Minnow', biome:'Cryogenic Canal', base:93.75},
+    {name:'Snowback Char', biome:'Cryogenic Canal', base:42.67},
+    {name:'Iced Perch', biome:'Cryogenic Canal', base:55.56},
+    {name:'Icebreaker Haddock', biome:'Cryogenic Canal', base:20},
+    {name:'Frozen Pike', biome:'Cryogenic Canal', base:26},
+    {name:'Chillfin Herring', biome:'Cryogenic Canal', base:64.29},
+    {name:'Frostjaw Cod', biome:'Cryogenic Canal', base:20},
+    {name:'Aurora Trout', biome:'Cryogenic Canal', base:15},
+    {name:'Glacial Sturgeon', biome:'Cryogenic Canal', base:14},
+
+    // Desolate Deep
+    {name:'Stalactite', biome:'Desolate Deep', base:2.69},
+    {name:'Slate Tuna', biome:'Desolate Deep', base:1.17},
+    {name:'Horseshoe Crab', biome:'Desolate Deep', base:2.78},
+    {name:'Coral Geode', biome:'Desolate Deep', base:11.11},
+    {name:'Phantom Ray', biome:'Desolate Deep', base:23.33},
+    {name:'Cockatoo Squid', biome:'Desolate Deep', base:100},
+    {name:'Rockstar Hermit Crab', biome:'Desolate Deep', base:54.17},
+    {name:'Banditfish', biome:'Desolate Deep', base:12.5},
+    {name:'Midnight Axolotl', biome:'Desolate Deep', base:366.67},
+    {name:'Barbed Shark', biome:'Desolate Deep', base:8.74},
+    {name:'Emperor Jellyfish', biome:'Desolate Deep', base:7.5},
+    {name:'Sea Mine', biome:'Desolate Deep', base:9.23},
+
+    // The Depths
+    {name:'Destroyed Fossil', biome:'The Depths', base:7.78},
+    {name:'Scrap Metal', biome:'The Depths', base:8},
+    {name:'Deep-sea Dragonfish', biome:'The Depths', base:11.25},
+    {name:'Deep-sea Hatchetfish', biome:'The Depths', base:10},
+    {name:'Three-eyed Fish', biome:'The Depths', base:33.33},
+    {name:'Depth Octopus', biome:'The Depths', base:21.88},
+    {name:'Frilled Shark', biome:'The Depths', base:16.67},
+    {name:'Luminescent Minnow', biome:'The Depths', base:150},
+
+    // Veil of the Forsaken
+    {name:'Hydra Haddock', biome:'Veil of the Forsaken', base:8.51},
+    {name:'Kraken Koi', biome:'Veil of the Forsaken', base:3.93},
+    {name:'Serpent Surgeonfish', biome:'Veil of the Forsaken', base:5.95},
+    {name:'Gorgon Grouper', biome:'Veil of the Forsaken', base:9.09},
+    {name:'Siren Sculpin', biome:'Veil of the Forsaken', base:16},
+    {name:'Cyclone Scorpionfish', biome:'Veil of the Forsaken', base:15},
+    {name:'Typhoon Tailfin', biome:'Veil of the Forsaken', base:2.65},
+    {name:'Twilight Tentaclefish', biome:'Veil of the Forsaken', base:17.33},
+    {name:'Scylla', biome:'Veil of the Forsaken', base:0.4},
+
+    // Treasure Island
+    {name:'Crowned Royal Gramma', biome:'Treasure Island', base:43.33},
+    {name:'Gem Anchovy', biome:'Treasure Island', base:845},
+    {name:'Coin Triggerfish', biome:'Treasure Island', base:133.33},
+    {name:'Bluegem Angelfish', biome:'Treasure Island', base:100},
+    {name:'Gem Salmon', biome:'Treasure Island', base:100},
+    {name:'Emerald Angelfish', biome:'Treasure Island', base:131.78},
+    {name:'Goldband Butterflyfish', biome:'Treasure Island', base:131.82},
+    {name:'Gemscale Mandarinfish', biome:'Treasure Island', base:245.45},
+
+    // Open Ocean
+    {name:'Rock Gunnel', biome:'Open Ocean', base:3.57},
+    {name:'Pupfish', biome:'Open Ocean', base:3.75},
+    {name:'Hogchoker', biome:'Open Ocean', base:4},
+    {name:'Black Swallower', biome:'Open Ocean', base:3.44},
+    {name:'Warty Angler', biome:'Open Ocean', base:3.75},
+    {name:'Four Eyes Fish', biome:'Open Ocean', base:3.85},
+    {name:'Boarfish', biome:'Open Ocean', base:3.33},
+    {name:'Snipefish', biome:'Open Ocean', base:4.02},
+
+    // Regionless
+    {name:'Seaweed', biome:'Regionless', base:30},
+    {name:'Boot', biome:'Regionless', base:12.5},
+    {name:'Rock (junk)', biome:'Regionless', base:0.71},
+    {name:'Driftwood', biome:'Regionless', base:16.67},
+    {name:'Tire', biome:'Regionless', base:1.82},
+    {name:'Log', biome:'Regionless', base:16.53},
+    {name:'Doubloon', biome:'Regionless', base:5},
+    {name:'Fish Barrel', biome:'Regionless', base:5.33},
+];
 
         const mutationList = [
             {name:'None', multiplier:1}, {name:'Puritas', multiplier:17}, {name:'Umbra', multiplier:15},
